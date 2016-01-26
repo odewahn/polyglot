@@ -1,17 +1,12 @@
-from flask import Flask, jsonify, Response
+from flask import Flask, jsonify, Response, send_from_directory
 from flask_restful import reqparse, abort, Api, Resource
 from flask.ext.pymongo import PyMongo
 from bson.json_util import dumps, default
+import os
 
-app = Flask("test")
+app = Flask("test",static_folder='')
 api = Api(app)
 mongo = PyMongo(app)
-
-QUOTES = {
-    'quote1': {'task': 'build an API'},
-    'quote2': {'task': '?????'},
-    'quote3': {'task': 'profit!'},
-}
 
 
 parser = reqparse.RequestParser()
@@ -19,12 +14,21 @@ parser.add_argument('author')
 parser.add_argument('content', required=True,
 help="Content cannot be blank!")
 
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))   # refers to application_top
+APP_STATIC = os.path.join(APP_ROOT, 'demo')
+
 
 # Todo
 # shows a single todo item and lets you delete a todo item
 class Quote(Resource):
     def get(self, quote_id):
-        quotes = mongo.db.quotes.find_one({"id": int(quote_id)})
+        if quote_id == "random":
+            quotes = mongo.db.quotes.find().sort("id", -1).limit(1)
+            max_number = int(quotes[0]["id"])
+            rand_quote = randint(0, max_number)
+            quotes = mongo.db.quotes.find_one({"id": int(rand_quote)})
+        else:
+            quotes = mongo.db.quotes.find_one({"id": int(quote_id)})
         resp = Response(dumps({'data': quotes}, default=default),
                 mimetype='application/json')
         return resp
@@ -67,7 +71,7 @@ class Quote(Resource):
 class QuoteList(Resource):
     def get(self):
         quotes = mongo.db.quotes.find().sort("id", -1).limit(10)
-        resp = Response(dumps({'data': quotes}, default=default),
+        resp = Response(dumps(quotes, default=default),
                 mimetype='application/json')
         return resp
 
@@ -84,12 +88,18 @@ class QuoteList(Resource):
 
         return 201
 
-##
-## Actually setup the Api resource routing here
-##
+@app.route('/')
+def hello_world():
+    return 'Hello from Flask!'
+
+
+@app.route('/demo')
+def serve_page():
+    return send_from_directory(APP_STATIC, "index.html")
+
 api.add_resource(QuoteList, '/api/quotes')
 api.add_resource(Quote, '/api/quotes/<quote_id>')
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True,host='0.0.0.0', port=3000)
