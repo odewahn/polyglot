@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+
+<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+<script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+
+
+<script>
+	var base_url = "/api/quotes";
+
+	$(function() {
+		$("div[id^='display']").hide();
+		showAllQuotes();
+	});
+
+	// Get all quotes
+	function showAllQuotes() {
+		$("div[id^='display']").hide();
+		$.get(base_url, function(data) {
+			heading = "All Quotes";
+			quotes = data;
+			$('#all-list-lines').html('');
+			for (quote in quotes) {
+				alert (JSON.stringify(quotes[quote]));
+				newline = $("#all-lines-template").html().replace(/\$id/g, quotes[quote].id).replace(/\$quote/g, quotes[quote].content).replace(/\$author/g, quotes[quote].author);
+				$('#all-list-lines').html($('#all-list-lines').html() + newline);
+			}
+			$("#display-main-list").show();
+		});
+	}
+
+	// Get a single quote (with quote_id)
+	function showSingleQuote(quote_id) {
+		$("div[id^='display']").hide();
+		$.get(base_url + "/" + quote_id, function(data) {
+			quote = data;
+			heading = quote.content;
+			newline = $("#main-single-template").html().replace(/\$id/g, quote.id).replace(/\$content/g, quote.content).replace(/\$heading/g, heading).replace(/\$author/g, quote.author);
+			$("#display-main-single").html(newline).show();
+		});
+	}
+
+	function deleteQuote(quote_id) {
+		$("div[id^='display']").hide();
+		$.ajax({
+			url: base_url + "/" + quote_id,
+			type: 'DELETE',
+			success: function(result) {
+				showAllQuotes();
+			}
+		});
+	}
+
+	function showAddQuote() {
+		$("div[id^='display']").hide();
+		$("#display-main-add").show();
+	}
+
+	function addQuote() {
+		author = $("#main-add #author").val();
+		content = $("#main-add #content").val();
+		$.ajax({
+			type: "POST",
+			url: base_url,
+			dataType: 'json',
+			contentType: "application/json",
+			data: JSON.stringify({content: content, author: author}),
+			success: function(data) {
+				showAllQuotes();
+			}
+		});
+	}
+
+	function showEditQuote(quote_id, content, author) {
+		$("div[id^='display']").hide();
+		newline = $("#edit-template").html().replace(/\$id/g, quote_id).replace(/\$content/g, content).replace(/\$author/g, author);
+		$("#display-main-edit").html(newline).show();
+	}
+
+	function editQuote(quote_id) {
+		content = $("#main-edit #content").val();
+		author = $("#main-edit #author").val();
+		$.ajax({
+			type: "PUT",
+			url: base_url + "/" + quote_id,
+			dataType: 'json',
+			contentType: "application/json",
+			data: JSON.stringify({content: content, author:author}),
+			success: function(data) {
+				showAllQuotes();
+			}
+		});
+	}
+
+</script>
+
+<style>
+	#main-list{
+		padding-top: 20px;
+		padding-bottom: 10px;
+	}
+	#list-lines{
+		padding: 5px;
+	}
+	#main-add{
+		padding-top: 20px;
+		padding-bottom: 10px;
+	}
+	.quote{
+		font-size: 16px;
+		line-height: 34px;
+		font-weight: 700;
+	}
+	#btn-primary{
+		margin-bottom: 5px;
+	}
+</style>
+
+<div id="container" class='container'>
+
+<div id="display-main-list" style="display: none">
+	<h2>All Quotes</h2>
+	<div id="main-list" class="container">
+		<div class="row">
+			<div class="col-xs-12">
+				<button class="btn-primary btn-lg" onclick="showAddQuote()">Add New Quote</button>
+			</div>
+			<div class="col-xs-12 heading"><h3>All Quotes</h3></div>
+			<div id ="all-list-lines"></div>
+		</div>
+	</div>
+</div>
+
+<div id="display-main-single" style="display: none">
+</div>
+
+<div id="main-single-template" style="display: none">
+	<h2>Details for: </h2>
+	<div id="main-single" class="container">
+		<div class="row">
+			<div class="col-xs-12"><h3>$heading</h3></div>
+			<div id ="single-list-line">
+				<div class='row'>
+					<div class='col-xs-1'></div>
+					<div class='col-xs-3 quote'>$content</div>
+					<div class='col-xs-3 quote'>$author</div>
+					<div class='col-xs-6'>
+						<button class='btn btn-primary button-edit' type='button' data-id='$id' onclick='showEditQuote($id, "$content", "$author")'>Edit</button>
+						<button class='btn btn-danger button-delete' type='button' data-id='$id' onclick='deleteQuote($id)'>Delete</button>
+					</div>
+				</div>	
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div id="display-main-add" style="display: none">
+	<h2>Add a Quote</h2>
+	<div id="main-add" class="container">
+		<div class="row">
+			<div class="col-sm-3">
+				<label for="content" class="quote">Quote</label>
+			</div>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" id="content" content='content' placeholder="Quote Here">
+			</div>
+			<br />
+			<div class="col-sm-3">
+				<label for="author" class="quote">Author</label>
+			</div>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" id="author" content='author' placeholder="Author Here">
+			</div>
+			<div class="col-sm-3">
+				<button type="button" class="btn btn-primary" onclick='addQuote()'>Save</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="display-main-edit" style="display: none">
+</div>
+
+<div id="edit-template" style="display: none">
+	<h2>Edit a Quote</h2>
+	<div id="main-edit" class="container">
+		<div class="row">
+			<div class="col-sm-3">
+				<label for="quote" class="quote">Quote</label>
+			</div>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" id="content" content='content' value=$content>
+			</div>
+			<div class="col-sm-3">
+				<label for="quote" class="quote">Quote</label>
+			</div>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" id="author" content='author' value=$author>
+			</div>
+			<div class="col-sm-3">
+				<button type="button" class="btn btn-primary" onclick='editQuote($id)'>Save</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id='all-lines-template' style='display: none'>
+	<div class='row'>
+		<div class='col-xs-1'></div>
+		<div class='col-xs-4 quote'>$quote</div>
+		<div class='col-xs-2 quote'>$author</div>
+		<div class='col-xs-4'>
+			<button class='btn btn-primary button-view' type='button' data-id='$id' onclick='showSingleQuote($id)'>View</button>
+			<button class='btn btn-danger button-delete' type='button' data-id='$id' onclick='deleteQuote($id)'>Delete</button>
+		</div>
+	</div>	
+</div>
+
+</div>

@@ -19,8 +19,29 @@ Quote.count().exec(function(err, count){
 // *******************************************
 
 var Hapi = require('hapi');
+var Inert = require('inert');
+var Path = require('path');
+
 var server = new Hapi.Server();
 server.connection({ port: 3000 });
+server.register(require('inert'), function(err) {
+  
+  if (err) {
+    
+    throw err;
+  }
+  
+  server.route({
+    method : 'GET', path : '/demo/{path*}', handler : {
+      directory : {
+        path : './static',
+        listing : false,
+        index : true
+      }
+    }
+  });
+  
+});
 
 server.route([
   {
@@ -38,7 +59,7 @@ server.route([
     method: 'GET',
     path: '/api/quotes',
     handler: function(request, reply) {
-      Quote.find({}, {}, {limit:10},
+      Quote.find({}, {}, {limit:10,sort:{'id':-1}},
       function (err, result) {
          reply(result);
       });
@@ -78,16 +99,16 @@ server.route([
     method: 'PUT',
     path: '/api/quotes/{id}',
     handler: function(request, reply) {
-        if(!request.body.hasOwnProperty('content') && (!request.body.hasOwnProperty('author'))) {
+        if((!request.payload.content) && (!request.payload.author)) {
           return reply('Error 400: Post syntax incorrect.').code(400);
         }
         var query = {'id':request.params.id};
         var newQuote = new Quote();
-        if (request.body.hasOwnProperty('author')) {
-         newQuote.author = request.body.author;
+        if (request.payload.author) {
+         newQuote.author = request.payload.author;
         };
-        if (request.body.hasOwnProperty('content')) {
-         newQuote.content = request.body.content;
+        if (request.payload.content) {
+         newQuote.content = request.payload.content;
         };
         var upsertData = newQuote.toObject();
         delete upsertData._id;
