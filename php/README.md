@@ -32,3 +32,13 @@ $ echo 'extension=mongo.so' >> `php -i | grep Loaded | grep 'php.ini' | awk '{pr
 ## Edit the Code
 
 Simply edit `src/routes.php`    
+
+## Running the Server
+
+From the root of the project (the same directory as this README) run the following:
+
+```
+$ php -S 0.0.0.0:8080 -t ./public/ ./public/index.php
+```
+
+This will start the PHP cli-server on port `8080`.
