@@ -1,12 +1,6 @@
-var express = require('express');
-var app = express();
-var router = express.Router();    
-var path = require('path');
-var bodyParser = require('body-parser');
-
-app.use(express.static(path.join(__dirname, 'static')));
-app.use(bodyParser.json());
-
+// *******************************************
+// DATABASE STUFF ****************************
+// *******************************************
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/test');
 var db = mongoose.connection;
@@ -22,6 +16,15 @@ var Quote = mongoose.model('Quote', quoteSchema)
 Quote.count().exec(function(err, count){
    quotecount = count;
 });
+
+var express = require('express');
+var app = express();
+var router = express.Router();    
+var path = require('path');
+var bodyParser = require('body-parser');
+
+app.use(express.static(path.join(__dirname, '..', 'static')));
+app.use(bodyParser.json());
 
 // REST API
 router.route('/quotes/random')

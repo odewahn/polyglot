@@ -3,6 +3,7 @@ from flask_restful import reqparse, abort, Api, Resource
 from flask.ext.pymongo import PyMongo
 from bson.json_util import dumps, default
 import os
+from random import randint
 
 app = Flask("test",static_folder='')
 api = Api(app)
@@ -14,8 +15,7 @@ parser.add_argument('author')
 parser.add_argument('content', required=True,
 help="Content cannot be blank!")
 
-APP_ROOT = os.path.dirname(os.path.abspath(__file__))   # refers to application_top
-APP_STATIC = os.path.join(APP_ROOT, 'demo')
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 
 # Todo
@@ -95,7 +95,7 @@ def hello_world():
 
 @app.route('/demo')
 def serve_page():
-    return send_from_directory(APP_STATIC, "index.html")
+    return send_from_directory(APP_ROOT, "index.html")
 
 api.add_resource(QuoteList, '/api/quotes')
 api.add_resource(Quote, '/api/quotes/<quote_id>')
