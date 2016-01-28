@@ -14,7 +14,7 @@ $app->group('/api/quotes', function () {
         $this->logger->info("Fetching 10 records…\n");
 
         $results = [];
-        foreach ($quotes->find([], ['_id' => 0])->limit(10) as $quote) {
+        foreach ($quotes->find([], ['_id' => 0])->sort->(array('id' => -1))->limit(10) as $quote) {
             $results[] = $quote;
         }
 
