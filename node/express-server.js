@@ -8,7 +8,7 @@ var db = mongoose.connection;
 var quoteSchema = mongoose.Schema({
         content: String,
         author: String,
-        id: Number
+        index: Number
 });
 
 var quotecount;
@@ -30,7 +30,7 @@ app.use(bodyParser.json());
 router.route('/quotes/random')
 .get(function(req, res, next) {
     var random = Math.floor(Math.random() * quotecount);
-    Quote.findOne({"id":random},
+    Quote.findOne({"index":random},
     function (err, result) {
       if (err) {
         console.log(err);
@@ -42,10 +42,10 @@ router.route('/quotes/random')
 
 router.route('/quotes')
 .get(function(req, res, next) {
-    Quote.find({}, {}, {limit:10},
-      function (err, result) {
-         res.send(result);
-   });
+   var result = Quote.find().sort({'index': -1}).limit(10);
+   result.exec(function(err, quotes) {
+	res.send(quotes);
+});
 })
 .post(function(req, res, next) {
   if(!req.body.hasOwnProperty('content')) {
@@ -55,9 +55,9 @@ router.route('/quotes')
   quotecount = quotecount+1; 
   var newQuote;
   if (req.body.hasOwnProperty('author')) {
-    newQuote = new Quote({'content': req.body.content, 'author': req.body.author, 'id': quotecount});
+    newQuote = new Quote({'content': req.body.content, 'author': req.body.author, 'index': quotecount});
   } else {
-    newQuote = new Quote({'content': req.body.content, 'id':quotecount});
+    newQuote = new Quote({'content': req.body.content, 'index':quotecount});
   }
   newQuote.save(function (err, newQuote) {
     if (err) return console.error(err);
@@ -65,9 +65,9 @@ router.route('/quotes')
   });;
 });
 
-router.route('/quotes/:id')
+router.route('/quotes/:index')
 .get(function(req, res, next) {
-    Quote.findOne({"id":req.params.id},
+    Quote.findOne({"index":req.params.index},
     function (err, result) {
         res.send(result);
     });
@@ -77,7 +77,7 @@ router.route('/quotes/:id')
     res.statusCode = 400;
     return res.send('Error 400: Post syntax incorrect.');
   }
-  var query = {'id':req.params.id};
+  var query = {'index':req.params.index};
   var newQuote = new Quote();
   if (req.body.hasOwnProperty('author')) {
         newQuote.author = req.body.author;
@@ -93,7 +93,7 @@ router.route('/quotes/:id')
   });
 })
 .delete(function(req, res, next) {
-   Quote.findOneAndRemove({"id":req.params.id},
+   Quote.findOneAndRemove({"index":req.params.index},
     function (err, result) {
         if (!err) {
            res.json(true);

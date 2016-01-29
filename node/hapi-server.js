@@ -8,7 +8,7 @@ var db = mongoose.connection;
 var quoteSchema = mongoose.Schema({
         content: String,
         author: String,
-        id: Number
+        index: Number
 });
 
 var quotecount;
@@ -39,8 +39,7 @@ server.register(require('inert'), function(err) {
         index : true
       }
     }
-  });
-  
+  })
 });
 
 server.route([
@@ -49,7 +48,7 @@ server.route([
     path: '/api/quotes/random',
     handler: function(request, reply) {
       var random = Math.floor(Math.random() * quotecount);
-      Quote.findOne({"id":random},
+      Quote.findOne({"index":random},
       function (err, result) {
         reply(result);
       })
@@ -59,10 +58,10 @@ server.route([
     method: 'GET',
     path: '/api/quotes',
     handler: function(request, reply) {
-      Quote.find({}, {}, {limit:10,sort:{'id':-1}},
-      function (err, result) {
-         reply(result);
-      });
+   	var result = Quote.find().sort({'index': -1}).limit(10);
+   	result.exec(function(err, quotes) {
+		reply(quotes);
+	})
     }
   },
  {
@@ -75,9 +74,9 @@ server.route([
         quotecount = quotecount+1; 
         var newQuote;
         if (request.payload.author) {
-          newQuote = new Quote({'content': request.payload.content, 'author': request.payload.author, 'id': quotecount});
+          newQuote = new Quote({'content': request.payload.content, 'author': request.payload.author, 'index': quotecount});
         } else {
-         newQuote = new Quote({'content': request.payload.content, 'id':quotecount});
+         newQuote = new Quote({'content': request.payload.content, 'index':quotecount});
         }
         newQuote.save(function (err, newQuote) {
           if (err) return console.error(err);
@@ -87,9 +86,9 @@ server.route([
   },
   {
     method: 'GET',
-    path: '/api/quotes/{id}',
+    path: '/api/quotes/{index}',
     handler: function(request, reply) {
-    Quote.findOne({"id":request.params.id},
+    Quote.findOne({"index":request.params.index},
       function (err, result) {
         reply(result);
       });
@@ -97,12 +96,12 @@ server.route([
   },
 {
     method: 'PUT',
-    path: '/api/quotes/{id}',
+    path: '/api/quotes/{index}',
     handler: function(request, reply) {
         if((!request.payload.content) && (!request.payload.author)) {
           return reply('Error 400: Post syntax incorrect.').code(400);
         }
-        var query = {'id':request.params.id};
+        var query = {'index':request.params.index};
         var newQuote = new Quote();
         if (request.payload.author) {
          newQuote.author = request.payload.author;
@@ -122,9 +121,9 @@ server.route([
   },
   {
     method: 'DELETE',
-    path: '/api/quotes/{id}',
+    path: '/api/quotes/{index}',
     handler: function(request, reply) {
-        Quote.findOneAndRemove({"id":request.params.id},
+        Quote.findOneAndRemove({"index":request.params.index},
           function (err, result) {
             if (!err) {
               reply(true);

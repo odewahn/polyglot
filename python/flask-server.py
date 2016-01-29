@@ -16,19 +16,17 @@ parser.add_argument('content', required=True,
 help="Content cannot be blank!")
 
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = os.path.join(APP_ROOT, "..", "static")
 
-
-# Todo
-# shows a single todo item and lets you delete a todo item
 class Quote(Resource):
     def get(self, quote_id):
         if quote_id == "random":
-            quotes = mongo.db.quotes.find().sort("id", -1).limit(1)
-            max_number = int(quotes[0]["id"])
+            quotes = mongo.db.quotes.find().sort("index", -1).limit(1)
+            max_number = int(quotes[0]["index"])
             rand_quote = randint(0, max_number)
-            quotes = mongo.db.quotes.find_one({"id": int(rand_quote)})
+            quotes = mongo.db.quotes.find_one({"index": int(rand_quote)})
         else:
-            quotes = mongo.db.quotes.find_one({"id": int(quote_id)})
+            quotes = mongo.db.quotes.find_one({"index": int(quote_id)})
         resp = Response(dumps({'data': quotes}, default=default),
                 mimetype='application/json')
         return resp
@@ -37,7 +35,7 @@ class Quote(Resource):
         print "Quote id is %s" % quote_id
         try:
             mongo.db.quotes.remove({
-                'id': int(quote_id)
+                'index': int(quote_id)
             })
         except Exception as ve:
             print ve
@@ -48,12 +46,12 @@ class Quote(Resource):
         args = parser.parse_args()
         if not (args['content'] or args['author']):
             return 'Missing data', 400
-        existing_quote = mongo.db.quotes.find_one({"id": int(quote_id)})
+        existing_quote = mongo.db.quotes.find_one({"index": int(quote_id)})
         args['content'] = args['content'] if args['content'] else existing_quote["content"]
         args['author'] = args['author'] if args['author'] else existing_quote["author"]
         try:
             mongo.db.quotes.update({
-                'id': quote_id
+                'index': quote_id
             },{
                 '$set': {
                     'content': args['content'],
@@ -70,16 +68,16 @@ class Quote(Resource):
 # shows a list of all todos, and lets you POST to add new tasks
 class QuoteList(Resource):
     def get(self):
-        quotes = mongo.db.quotes.find().sort("id", -1).limit(10)
+        quotes = mongo.db.quotes.find().sort("index", -1).limit(10)
         resp = Response(dumps(quotes, default=default),
                 mimetype='application/json')
         return resp
 
     def post(self):
         args = parser.parse_args()
-        quotes = mongo.db.quotes.find().sort("id", -1).limit(1)
+        quotes = mongo.db.quotes.find().sort("index", -1).limit(1)
         print quotes[0]
-        args["id"] = int(quotes[0]["id"]) + 1
+        args["index"] = int(quotes[0]["index"]) + 1
         print args
         try:
             mongo.db.quotes.insert(args)
@@ -95,7 +93,7 @@ def hello_world():
 
 @app.route('/demo')
 def serve_page():
-    return send_from_directory(APP_ROOT, "index.html")
+    return send_from_directory(STATIC_ROOT, "index.html")
 
 api.add_resource(QuoteList, '/api/quotes')
 api.add_resource(Quote, '/api/quotes/<quote_id>')

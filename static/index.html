@@ -24,7 +24,7 @@
 			$('#all-list-lines').html('');
 			for (quote in quotes) {
 				alert (JSON.stringify(quotes[quote]));
-				newline = $("#all-lines-template").html().replace(/\$id/g, quotes[quote].id).replace(/\$quote/g, quotes[quote].content).replace(/\$author/g, quotes[quote].author);
+				newline = $("#all-lines-template").html().replace(/\$id/g, quotes[quote].index).replace(/\$quote/g, quotes[quote].content).replace(/\$author/g, quotes[quote].author);
 				$('#all-list-lines').html($('#all-list-lines').html() + newline);
 			}
 			$("#display-main-list").show();
@@ -37,7 +37,7 @@
 		$.get(base_url + "/" + quote_id, function(data) {
 			quote = data;
 			heading = quote.content;
-			newline = $("#main-single-template").html().replace(/\$id/g, quote.id).replace(/\$content/g, quote.content).replace(/\$heading/g, heading).replace(/\$author/g, quote.author);
+			newline = $("#main-single-template").html().replace(/\$id/g, quote.index).replace(/\$content/g, quote.content).replace(/\$heading/g, heading).replace(/\$author/g, quote.author);
 			$("#display-main-single").html(newline).show();
 		});
 	}

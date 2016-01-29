@@ -14,7 +14,7 @@ $app->group('/api/quotes', function () {
         $this->logger->info("Fetching 10 records…\n");
 
         $results = [];
-        foreach ($quotes->find([], ['_id' => 0])->sort->(array('id' => -1))->limit(10) as $quote) {
+        foreach ($quotes->find([], ['_id' => 0])->sort->(array('index' => -1))->limit(10) as $quote) {
             $results[] = $quote;
         }
 
@@ -30,8 +30,8 @@ $app->group('/api/quotes', function () {
             return $response->withStatus(400, 'Post syntax incorrect.');
         }
 
-        $quote['id'] = $quotes->count();
-        $quote['id']++;
+        $quote['index'] = $quotes->count();
+        $quote['index']++;
 
         try {
             $quotes->insert($quote);
@@ -55,7 +55,7 @@ $app->group('/api/quotes', function () {
         // Find a random quote
         $random = floor((mt_rand(0, 100) / 100) * $quotes->count());
         $random = $quotes->find(
-            ['id' => $random],
+            ['index' => $random],
             ['_id' => 0]
         );
 
@@ -74,9 +74,9 @@ $app->group('/api/quotes', function () {
     });
 
 
-    $this->group('/{id}', function() use ($quotes) {
+    $this->group('/{index}', function() use ($quotes) {
         $this->get('', function(Request $request, Response $response, array $args) use ($quotes) {
-            if ($result = $quotes->find(['id' => (int)   $args['id']], ['_id' => 0])) {
+            if ($result = $quotes->find(['index' => (int)   $args['index']], ['_id' => 0])) {
                 $record = $result->getNext();
 
                 $record = json_encode($record, JSON_PRETTY_PRINT);
@@ -96,7 +96,7 @@ $app->group('/api/quotes', function () {
             }
 
             try {
-                $quotes->update(['id' => $args['id']], $quote);
+                $quotes->update(['index' => $args['index']], $quote);
                 return $response
                     ->withStatus(200, 'OK')
                     ->getBody()
@@ -115,7 +115,7 @@ $app->group('/api/quotes', function () {
 
         $this->delete('', function(Response $request, Response $response, array $args) use ($quotes) {
             try {
-                $quotes->remove(['id' => $args['id']]);
+                $quotes->remove(['index' => $args['index']]);
                 return $response->withStatus(200, 'OK')->getBody()->write(json_encode(true, JSON_PRETTY_PRINT));
             } catch (\MongoCursorException $e) {
                 return $response
