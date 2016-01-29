@@ -12,15 +12,18 @@ $app->group('/api/quotes', function () {
 
     $this->get('', function (Request $request, Response $response, array $args) use ($quotes) {
         $this->logger->info("Fetching 10 records…\n");
-
+        
         $results = [];
-        foreach ($quotes->find([], ['_id' => 0])->sort->(array('index' => -1))->limit(10) as $quote) {
+        foreach ($quotes->find([], ['_id' => 0])->sort(['index' => -1])->limit(10) as $quote) {
             $results[] = $quote;
         }
-
-        return $response
-            ->withHeader('Content-Type', 'application/json')
+        $response
             ->getBody()->write(json_encode($results, JSON_PRETTY_PRINT));
+        $newResponse = $response->withHeader(
+            'Content-type',
+            'application/json; charset=utf-8'
+        );
+        return $newResponse;
     });
 
     $this->post('', function (Response $response, Request $request, array $args) use ($quotes) {
@@ -68,9 +71,13 @@ $app->group('/api/quotes', function () {
         $this->logger->info("Random record: \n" . $record . "\n");
 
         // Return the JSON response as application/json
-        return $response
-            ->withHeader('Content-Type', 'application/json')
+        $response
             ->getBody()->write($record);
+        $newResponse = $response->withHeader(
+                        'Content-type',
+                        'application/json; charset=utf-8'
+                       );
+        return $newResponse;
     });
 
 
@@ -129,6 +136,12 @@ $app->group('/api/quotes', function () {
     });
 });
 
-$app->get('/', function(Response $response, Request $request, $args) {
-    return $response->getBody()->write('Hello World');
+$app->get('/', function(Request $request, Response $response, $args) {
+    return $response->getBody()->write('Hello World from PHP Slim');
 });
+
+$app->get('/demo', function(Request $request, Response $response, $args) {
+    $content = file_get_contents('../static/index.html');
+    return $response->getBody()->write($content);
+});
+
