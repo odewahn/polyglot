@@ -1,6 +1,6 @@
 FROM python:2.7.10
 MAINTAINER Kirsten Hunter (khunter@akamai.com)
-RUN echo "deb http://repo.mongodb.org/apt/debian wheezy/mongodb-org/3.0 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list
+RUN echo "deb http://repo.mongodb.org/apt/debian wheezy/mongodb-org/3.0 main" |  tee /etc/apt/sources.list.d/mongodb-org-3.0.list
 RUN apt-get clean
 RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -q curl python-all wget vim python-pip php5 ruby perl5 nodejs npm mongodb mongodb-org
