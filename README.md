@@ -27,5 +27,6 @@ You will need to have mongodb installed and running.  To insert the information 
 `cd node; npm install; node hapi-server.js`
 
 # Ruby
+`cd ruby; gem install bundler; bundle install; ruby sinatra-server.rb`
 
 # Perl
