@@ -1,0 +1,9 @@
+    plugins:
+        MongoDB:
+            host: "localhost"
+            port: 27017
+            db_name: "test"
+    serializer: "JSON"
+    content_type: "application/json"
+    charset: "UTF-8"
+    show_errors: 1 
