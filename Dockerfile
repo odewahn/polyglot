@@ -2,6 +2,7 @@ FROM python:2.7.10
 MAINTAINER Kirsten Hunter (khunter@akamai.com)
 RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -q curl python-all wget vim python-pip php5 ruby perl5 nodejs npm mongodb mongodb-dev mongodb-server
+RUN mkdir -p /db/data
 run mongod
 RUN pip install httpie-edgegrid 
 ADD . /opt
