@@ -12,7 +12,7 @@ RUN gem install bundler
 RUN bundle install
 WORKDIR /opt/python
 RUN pip install -r requirements.txt
-WORKDIR /opt/data
-RUN mongoimport --collection quotes --file ../data/quoteid.json --type json --jsonArray
 WORKDIR /opt/node
 RUN npm install
+WORKDIR /opt/perl
+RUN cpan -i Dancer
