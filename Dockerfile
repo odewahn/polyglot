@@ -15,5 +15,3 @@ WORKDIR /opt/data
 #RUN mongoimport --collection quotes --file ../data/quoteid.json --type json --jsonArray
 WORKDIR /opt/node
 RUN npm install
-ADD ./MOTD /opt/MOTD
-RUN echo "cat /opt/MOTD" >> /root/.bashrc
