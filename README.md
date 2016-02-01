@@ -21,7 +21,7 @@ Next:
   * `cd ../data`
   * `mongoimport --collection quotes --file ../data/quoteid.json --type json --jsonArray`
   * run the startup command for whichever language you like
-  * The server will be running on http://<docker-ip>
+  * The server will be running on http://{docker-ip}
 
 # Setup
 You will need to have mongodb installed and running.  To insert the information from the quoteid.json file to get your DB started, use the following command:
