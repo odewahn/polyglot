@@ -20,6 +20,7 @@ Next:
   * `/etc/init.d/mongodb start`
   * `cd ../data`
   * `mongoimport --collection quotes --file ../data/quoteid.json --type json --jsonArray`
+  * `ln -s `which nodejs` /usr/bin/node`
   * run the startup command for whichever language you like
   * The server will be running on http://{docker-ip}
 
