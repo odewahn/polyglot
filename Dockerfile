@@ -4,7 +4,7 @@ RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes -q curl python-all wget vim python-pip php5 ruby perl5 nodejs npm 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes mongodb-server mongodb-dev mongodb
 RUN mkdir -p /data/db
-run mongod
+run mongod &
 RUN pip install httpie-edgegrid 
 ADD . /opt
 WORKDIR /opt/ruby
