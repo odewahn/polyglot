@@ -11,7 +11,7 @@ WORKDIR /opt/ruby
 RUN gem install bundler
 RUN bundle install
 WORKDIR /opt/python
-RUN python /opt/python/tools/setup.py install
+RUN python /opt/python/setup.py install
 WORKDIR /opt/data
 RUN mongoimport --collection quotes --file ../data/quoteid.json --type json --jsonArray
 WORKDIR /opt/node

@@ -17,6 +17,12 @@ You will need to have mongodb installed and running.  To insert the information 
 `mongoimport --collection quotes --file ../data/quoteid.json --type json --jsonArray`
 
 # PHP
+$ php composer.phar install 
+```
+$ pecl install mongo
+$ php -i | grep ini
+$ php -S 0.0.0.0:8080 -t ./public/ ./public/index.php
+```
 
 # Python
 `cd python; python setup.py install; python flask-server.py`
@@ -30,3 +36,4 @@ You will need to have mongodb installed and running.  To insert the information 
 `cd ruby; gem install bundler; bundle install; ruby sinatra-server.rb`
 
 # Perl
+`sudo cpan -i Dancer; perl dancer-server.pl`
