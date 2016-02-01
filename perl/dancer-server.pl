@@ -89,7 +89,7 @@ put '/api/quotes/:index' => sub {
     if (params->{author}) { $author = params->{author}}
     if (params->{content}) { $content = params->{content}}
     
-    my $response = $quotes->update_one(encode_json({'index' => params->{index}}), 
+    my $response = $quotes->update_one({'index' => params->{index}}), 
                         {'$set' => {'author'=>$author, 'content'=>$content}});
 
     status 202;
