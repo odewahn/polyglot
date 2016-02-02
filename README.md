@@ -11,6 +11,19 @@ The following paths work in each environment:
 * / => hello world from the framework
 * /demo => Single page HTML application
 
+# Docker setup
+You can skip all of the setup instructions below and use the docker container if you like.
+First, install docker from http://www.docker.com/toolkit
+Next:
+  * Start the docker shortcut utility, note the IP address it gives
+  * `docker run -i -t -p 80:3000 synedra/polyglot /bin/bash`
+  * `/etc/init.d/mongodb start`
+  * `cd ../data`
+  * `mongoimport --collection quotes --file ../data/quoteid.json --type json --jsonArray`
+  * `ln -s `which nodejs` /usr/bin/node`
+  * run the startup command for whichever language you like
+  * The server will be running on http://{docker-ip}
+
 # Setup
 You will need to have mongodb installed and running.  To insert the information from the quoteid.json file to get your DB started, use the following command:
 
@@ -21,7 +34,7 @@ $ php composer.phar install
 ```
 $ pecl install mongo
 $ php -i | grep ini
-$ php -S 0.0.0.0:8080 -t ./public/ ./public/index.php
+$ php -S 0.0.0.0:3000 -t ./public/ ./public/index.php
 ```
 
 # Python
@@ -29,7 +42,6 @@ $ php -S 0.0.0.0:8080 -t ./public/ ./public/index.php
 
 # Node
 `cd node; npm install; node express-server.js`
-
 `cd node; npm install; node hapi-server.js`
 
 # Ruby

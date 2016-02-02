@@ -2,3 +2,5 @@ source 'http://rubygems.org'
 
 gem 'sinatra', '>= 1.0'
 gem 'sinatra-contrib', '>= 1.0'
+gem 'mongo', '>= 2.2.2'
+gem 'mongoid', '>= 5.1.0'
