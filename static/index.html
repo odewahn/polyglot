@@ -23,7 +23,6 @@
 			quotes = data;
 			$('#all-list-lines').html('');
 			for (quote in quotes) {
-				alert (JSON.stringify(quotes[quote]));
 				newline = $("#all-lines-template").html().replace(/\$id/g, quotes[quote].index).replace(/\$quote/g, quotes[quote].content).replace(/\$author/g, quotes[quote].author);
 				$('#all-list-lines').html($('#all-list-lines').html() + newline);
 			}
