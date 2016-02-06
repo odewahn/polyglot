@@ -23,8 +23,14 @@ var router = express.Router();
 var path = require('path');
 var bodyParser = require('body-parser');
 
-app.use(express.static(path.join(__dirname, '..', 'static')));
+app.use('/demo', express.static(path.join(__dirname, '..', 'static')));
 app.use(bodyParser.json());
+
+// index
+app.get('/', function(req, res) {
+  res.send('Hello world from express');
+});
+app.use('/api', router);
 
 // REST API
 router.route('/quotes/random')
@@ -101,12 +107,6 @@ router.route('/quotes/:index')
     });
 });
 
-app.use('/api', router);
-
-// index
-app.get('/', function(req, res) {
-  res.send('Hello world from express');
-});
 
 var server = app.listen(3000, function() {
   console.log('Express is listening to http://localhost:3000');
