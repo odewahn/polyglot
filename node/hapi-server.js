@@ -27,14 +27,13 @@ server.connection({ port: 3000 });
 server.register(require('inert'), function(err) {
   
   if (err) {
-    
     throw err;
   }
   
   server.route({
     method : 'GET', path : '/demo/{path*}', handler : {
       directory : {
-        path : './static',
+        path : '../static',
         listing : false,
         index : true
       }
