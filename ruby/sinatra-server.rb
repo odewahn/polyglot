@@ -14,9 +14,14 @@ end
 Mongoid.load!("mongoid.yml", :development)
 set :port, 3000
 
-get '/demo' do
+get '/demo*' do
   content_type :html
   File.read(File.join('../static', 'index.html'))
+end
+
+get '/' do
+  content_type :html
+  "Hello World from Sinatra"
 end
 
 before do
