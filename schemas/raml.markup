@@ -1,0 +1,82 @@
+AML 0.8
+title: Fortune Cookie
+version: V1
+baseUri: http://www.fortunecookieserver.com/api/v1
+/quotes:
+  displayName: Quotes
+  get:
+    description: Get a list of quotes
+    queryParameters:
+      random:
+        description: Retrieve a random quote
+        required: false
+        default: false
+        type: boolean
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              [
+                {"content":"That which does not kill us makes us stronger.",
+                  "author":"Sun Yi",
+                  "id":1
+                }
+              ]
+
+  post:
+    description: Add a new quote
+    body:
+      application/json:
+        example: |
+          {"content":"All's fair in love and war.",
+                  "author":"John Lyly"
+           }
+    responses:
+      201:
+        body:
+          application/json:
+            example: |
+              {
+                "id":2
+              }
+      500:
+        body:
+          application/json:
+            example: |
+              {
+                "errorMessage": "Unable to add quote."
+              }
+              
+  /{quoteid}:
+    displayName: Single Quote
+    get:
+      description: Get a specific quote
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {"content":"That which does not kill us makes us stronger.",
+                  "author":"Sun Yi",
+                  "id":1
+                }
+    put:
+      description: Update a specific quote
+      body:
+        application/json:
+          example: |
+           {"content":"All's fair in love and war.",
+             "author":"John Lyly"
+           }
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {"content":"That which does'nt kill us makes us stronger.",
+                  "author":"Sun Yi",
+                  "id":1
+                }
+    delete:
+      description: Delete a specific quote

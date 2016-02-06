@@ -1,0 +1,110 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Fortune Cookie API",
+        "description": "Random quote of the day",
+        "version": "1.0.0"
+    },
+    "host": "api.fortunecookieserver.com",
+    "schemes": [
+        "http"
+    ],
+    "basePath": "/v1",
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/quotes": {
+            "get": {
+                "summary": "Quotes",
+                "description": "This is a quote server.\n",
+                "parameters": [
+                    {
+                        "name": "random",
+                        "in": "path",
+                        "description": "Get a random quote?",
+                        "required": false,
+                        "type": "boolean"
+                    }
+                ],
+                "tags": [
+                    "Quotes"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of products",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Quote"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/quotes/{quoteid}": {
+            "get": {
+                "summary": "Single quote",
+                "parameters": [
+                    {
+                        "name": "quoteid",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A single quote",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/Quote"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Quote": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Unique identifier"
+                },
+                "content": {
+                    "type": "string",
+                    "description": "Quote itself."
+                },
+                "author": {
+                    "type": "string",
+                    "description": "Author of quote."
+                }
+            }
+        },
+        "Error": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "fields": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
