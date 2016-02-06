@@ -1,6 +1,5 @@
 use Dancer;
 use Dancer::Plugin::CRUD;
-use JSON;
 use MongoDB;
 
 my $client = MongoDB->connect();
@@ -12,6 +11,12 @@ set content_type => 'application/json';
 
 get '/' => sub{
     return {message => "Hello from Perl and Dancer"};
+};
+
+set public => path(dirname(__FILE__), '..', 'static');
+
+get "/demo/?" => sub {
+    send_file '/index.html'
 };
 
 get '/api/quotes' => sub {
@@ -89,7 +94,7 @@ put '/api/quotes/:index' => sub {
     if (params->{author}) { $author = params->{author}}
     if (params->{content}) { $content = params->{content}}
     
-    my $response = $quotes->update_one({'index' => params->{index}}), 
+    my $response = $quotes->update_one({'index' => params->{index}}, 
                         {'$set' => {'author'=>$author, 'content'=>$content}});
 
     status 202;
