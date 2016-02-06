@@ -11,19 +11,6 @@ The following paths work in each environment:
 * / => hello world from the framework
 * /demo => Single page HTML application
 
-# Docker setup
-You can skip all of the setup instructions below and use the docker container if you like.
-First, install docker from http://www.docker.com/toolkit
-Next:
-  * Start the docker shortcut utility, note the IP address it gives
-  * `docker run -i -t -p 80:3000 synedra/polyglot /bin/bash`
-  * `/etc/init.d/mongodb start`
-  * `cd ../data`
-  * `mongoimport --collection quotes --file ../data/quoteid.json --type json --jsonArray`
-  * `ln -s `which nodejs` /usr/bin/node`
-  * run the startup command for whichever language you like
-  * The server will be running on http://{docker-ip}
-
 # Setup
 You will need to have mongodb installed and running.  To insert the information from the quoteid.json file to get your DB started, use the following command:
 
@@ -49,3 +36,18 @@ $ php -S 0.0.0.0:3000 -t ./public/ ./public/index.php
 
 # Perl
 `sudo cpan -i Dancer; perl dancer-server.pl`
+
+# Docker setup
+You can skip all of the setup instructions below and use the docker container if you like.
+First, install docker from http://www.docker.com/toolkit
+Next:
+  * Start the docker shortcut utility, note the IP address it gives
+  * `docker run -i -t -p 80:3000 synedra/polyglot /bin/bash`
+  * `/etc/init.d/mongodb start`
+  * `cd ../data`
+  * `mongoimport --collection quotes --file ../data/quoteid.json --type json --jsonArray`
+  * `ln -s `which nodejs` /usr/bin/node`
+  * run the startup command for whichever language you like
+  * The server will be running on http://{docker-ip}
+
+
