@@ -12,7 +12,10 @@ The following paths work in each environment:
 * /demo => Single page HTML application
 
 # Setup
-You will need to have mongodb installed and running.  To insert the information from the quoteid.json file to get your DB started, use the following command:
+You will need to have mongodb installed and running.  Installation info for the major platforms is at https://docs.mongodb.org/manual/installation/
+
+
+To insert the information from the quoteid.json file to get your DB started, use the following command:
 
 `mongoimport --collection quotes --file ../data/quoteid.json --type json --jsonArray`
 
