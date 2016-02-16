@@ -21,13 +21,14 @@ STATIC_ROOT = os.path.join(APP_ROOT, "..", "static")
 class Quote(Resource):
     def get(self, quote_id):
         if quote_id == "random":
+	    print "Random is random"
             quotes = mongo.db.quotes.find().sort("index", -1).limit(1)
             max_number = int(quotes[0]["index"])
             rand_quote = randint(0, max_number)
             quotes = mongo.db.quotes.find_one({"index": int(rand_quote)})
         else:
             quotes = mongo.db.quotes.find_one({"index": int(quote_id)})
-        resp = Response(dumps({'data': quotes}, default=default),
+        resp = Response(dumps(quotes, default=default),
                 mimetype='application/json')
         return resp
 

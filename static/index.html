@@ -57,6 +57,7 @@
 			url: base_url + "/" + quote_id,
 			type: 'DELETE',
 			success: function(result) {
+				showRandomQuote();
 				showAllQuotes();
 			}
 		});
@@ -77,6 +78,7 @@
 			contentType: "application/json",
 			data: JSON.stringify({content: content, author: author}),
 			success: function(data) {
+				 showRandomQuote();
 				showAllQuotes();
 			}
 		});
@@ -98,6 +100,7 @@
 			contentType: "application/json",
 			data: JSON.stringify({content: content, author:author}),
 			success: function(data) {
+				 showRandomQuote();
 				showAllQuotes();
 			}
 		});
