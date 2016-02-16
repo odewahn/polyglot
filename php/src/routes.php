@@ -26,7 +26,7 @@ $app->group('/api/quotes', function () {
         return $newResponse;
     });
 
-    $this->post('', function (Response $response, Request $request, array $args) use ($quotes) {
+    $this->post('', function (Request $request, Response $response, array $args) use ($quotes) {
         $quote = json_decode($request->getBody()->getContents(), JSON_OBJECT_AS_ARRAY);
 
         if (!isset($quote['content'])) {
