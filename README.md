@@ -38,7 +38,7 @@ $ php -S 0.0.0.0:3000 -t ./public/ ./public/index.php
 `cd ruby; gem install bundler; bundle install; ruby sinatra-server.rb`
 
 # Perl
-`sudo cpan -i Dancer; perl dancer-server.pl`
+`sudo cpan -i Dancer Dancer::Plugin::CRUD JSON MongoDB; perl dancer-server.pl`
 
 # Docker setup
 You can skip all of the setup instructions below and use the docker container if you like.
@@ -49,7 +49,6 @@ Next:
   * `/etc/init.d/mongodb start`
   * `cd ../data`
   * `mongoimport --collection quotes --file ../data/quoteid.json --type json --jsonArray`
-  * `ln -s `which nodejs` /usr/bin/node`
   * run the startup command for whichever language you like
   * The server will be running on http://{docker-ip}
 
