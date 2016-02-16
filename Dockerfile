@@ -17,6 +17,6 @@ RUN pip install -r requirements.txt
 WORKDIR /opt/node
 RUN npm install
 WORKDIR /opt/perl
-RUN cpan -i Dancer Dancer::Plugin::CRUD MongoDB JSON
+RUN cpan -i -f Dancer Dancer::Plugin::CRUD MongoDB JSON
 EXPOSE 3000
 ENTRYPOINT ["/bin/bash"]
