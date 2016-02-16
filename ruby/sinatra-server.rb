@@ -13,6 +13,7 @@ class Quote
 end
 Mongoid.load!("mongoid.yml", :development)
 set :port, 3000
+set :bind, '0.0.0.0'
 
 get '/demo*' do
   content_type :html
