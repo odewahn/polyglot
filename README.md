@@ -46,11 +46,11 @@ You can skip all of the setup instructions below and use the docker container if
 First, install docker from http://www.docker.com/toolkit
 Next:
   * Start the docker shortcut utility, note the IP address it gives
-  * `docker run -i -t -p 80:3000 synedra/polyglot /bin/bash`
+  * `docker run -i -t -p 3000:3000 synedra/polyglot /bin/bash`
   * `/etc/init.d/mongodb start`
   * `cd ../data`
   * `mongoimport --collection quotes --file ../data/quoteid.json --type json --jsonArray`
   * run the startup command for whichever language you like
-  * The server will be running on http://{docker-ip}
+  * The server will be running on http://{docker-ip}:3000
 
 
