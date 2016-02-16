@@ -29,7 +29,7 @@ $ php -S 0.0.0.0:3000 -t ./public/ ./public/index.php
 ```
 
 # Python
-`cd python; python setup.py install; python flask-server.py`
+`cd python; pip install -r requirements.txt; python flask-server.py`
 
 # Node
 `cd node; npm install; node express-server.js`
