@@ -16,4 +16,5 @@ WORKDIR /opt/node
 RUN npm install
 WORKDIR /opt/perl
 RUN cpan -i Dancer
+EXPOSE 3000
 ENTRYPOINT ["/bin/bash"]
