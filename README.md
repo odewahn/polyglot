@@ -42,7 +42,7 @@ $ php -S 0.0.0.0:3000 -t ./public/ ./public/index.php
 `sudo cpan -i -f Dancer Dancer::Plugin::CRUD JSON MongoDB; perl dancer-server.pl`
 
 # Docker setup
-You can skip all of the setup instructions below and use the docker container if you like.
+You can skip all of the setup instructions above and use the docker container if you like.
 First, install docker from http://www.docker.com/toolkit
 Next:
   * Start the docker shortcut utility, note the IP address it gives
