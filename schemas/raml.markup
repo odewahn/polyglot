@@ -74,7 +74,7 @@ baseUri: http://www.fortunecookieserver.com/api/v1
           body:
             application/json:
               example: |
-                {"content":"That which does'nt kill us makes us stronger.",
+                {"content":"That which doesn't kill us makes us stronger.",
                   "author":"Sun Yi",
                   "id":1
                 }

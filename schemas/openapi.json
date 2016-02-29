@@ -18,15 +18,6 @@
             "get": {
                 "summary": "Quotes",
                 "description": "This is a quote server.\n",
-                "parameters": [
-                    {
-                        "name": "random",
-                        "in": "path",
-                        "description": "Get a random quote?",
-                        "required": false,
-                        "type": "boolean"
-                    }
-                ],
                 "tags": [
                     "Quotes"
                 ],
@@ -64,7 +55,6 @@
                     "200": {
                         "description": "A single quote",
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/Quote"
                         }
                     }
