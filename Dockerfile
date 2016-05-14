@@ -20,5 +20,7 @@ WORKDIR /opt/perl
 RUN cpan -i -f Dancer Dancer::Plugin::CRUD MongoDB JSON
 WORKDIR /opt/php
 RUN pecl install mongo
+WORKDIR /opt/data
+RUN /etc/init.d/mongodb start
 EXPOSE 3000
 ENTRYPOINT ["/bin/bash"]
