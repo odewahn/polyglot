@@ -48,7 +48,6 @@ Next:
   * Start the docker shortcut utility, note the IP address it gives
   * `docker run -i -t -p 3000:3000 synedra/polyglot /bin/bash`
   * `/etc/init.d/mongodb start`
-  * `cd ../data`
   * `mongoimport --collection quotes --file ../data/quoteid.json --type json --jsonArray`
   * run the startup command for whichever language you like
   * The server will be running on http://{docker-ip}:3000
