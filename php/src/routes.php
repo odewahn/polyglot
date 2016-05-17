@@ -95,7 +95,7 @@ $app->group('/api/quotes', function () {
             return $response->withStatus(500, 'Internal Server Error');
         });
 
-        $this->put('', function(Response $request, Response $response, array $args) use ($quotes) {
+        $this->put('', function(Request $request, Response $response, array $args) use ($quotes) {
             $quote = json_decode($request->getBody()->getContents(), JSON_OBJECT_AS_ARRAY);
 
             if (!isset($quote['content']) && !isset($quote['author'])) {
@@ -120,10 +120,11 @@ $app->group('/api/quotes', function () {
             return $response->withStatus(500, 'Internal Server Error');
         });
 
-        $this->delete('', function(Response $request, Response $response, array $args) use ($quotes) {
+        $this->delete('', function(Request $request, Response $response, array $args) use ($quotes) {
             try {
-                $quotes->remove(['index' => $args['index']]);
-                return $response->withStatus(200, 'OK')->getBody()->write(json_encode(true, JSON_PRETTY_PRINT));
+                $data = $quotes->remove(['index' => (int) $args['index']], ['j' => false]);
+		$row = $quotes->find(['index' => (int) $args['index']]);
+                return $response->withStatus(200, 'OK')->getBody()->write(json_encode(['row' => $row, 'quotes' => $quotes, 'data' => $data, 'args' => $args], JSON_PRETTY_PRINT));
             } catch (\MongoCursorException $e) {
                 return $response
                     ->withStatus(500, 'Internal Server Error')

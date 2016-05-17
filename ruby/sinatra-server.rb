@@ -59,8 +59,7 @@ end
                         author: @json['author'], 
                         index: newnumber)
       quote.save
-      status 201
-      body = newnumber
+      newnumber.to_json
     end
 
     # update
@@ -73,7 +72,7 @@ end
                         author: @json['author']
                   )
       quote.save
-      status 202
+      params[:index].to_json
     end
 
     delete '/quotes/:index' do

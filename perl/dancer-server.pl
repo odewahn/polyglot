@@ -52,9 +52,8 @@ post '/api/quotes' => sub {
     );
 
     my $response = $quotes->insert_one(\%response);
-
     status 201;
-    return ;
+    return $max_id;
 };
 
 
@@ -98,7 +97,7 @@ put '/api/quotes/:index' => sub {
                         {'$set' => {'author'=>$author, 'content'=>$content}});
 
     status 202;
-    return;
+    return params->{'index'};
 };
 
 del '/api/quotes/:index' => sub {
