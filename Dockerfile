@@ -1,7 +1,7 @@
 FROM python:2.7.10
 MAINTAINER Kirsten Hunter (khunter@akamai.com)
 RUN apt-get update
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes -q curl python-all wget vim python-pip php-pear php5 php5-dev ruby ruby-dev perl5 npm 
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes -q curl python-all wget vim python-pip php-pear php5 php5-mongo php5-dev ruby ruby-dev perl5 npm 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes mongodb-server mongodb-dev mongodb
 RUN curl -sL https://deb.nodesource.com/setup_4.x |  bash -
 RUN apt-get install -y --force-yes nodejs
@@ -19,8 +19,6 @@ RUN npm install
 WORKDIR /opt/perl
 RUN cpan -i -f Dancer Dancer::Plugin::CRUD MongoDB JSON
 WORKDIR /opt/php
-RUN pecl install mongo
+RUN php composer.phar install
 WORKDIR /opt/data
-RUN /etc/init.d/mongodb start
-EXPOSE 3000
 ENTRYPOINT ["/bin/bash"]
