@@ -21,4 +21,6 @@ RUN cpan -i -f Dancer Dancer::Plugin::CRUD MongoDB JSON
 WORKDIR /opt/php
 RUN php composer.phar install
 WORKDIR /opt/data
+ADD ./MOTD /opt/MOTD
+RUN echo "cat /opt/MOTD" >> /root/.bashrc
 ENTRYPOINT ["/bin/bash"]
