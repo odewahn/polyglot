@@ -106,12 +106,12 @@ $app->group('/api/quotes', function () {
             }
 
             try {
-                $quotes->update(['index' => $args['index']], $quote);
+                $quotes->update(['index' => (int) $args['index']], $quote);
                 return $response
                     ->withStatus(200, 'OK')
                     ->getBody()
                     ->write(
-                        json_encode($args['index'], JSON_PRETTY_PRINT)
+                        json_encode((int) $args['index'], JSON_PRETTY_PRINT)
                     );
             } catch (\MongoCursorException $e) {
                 return $response

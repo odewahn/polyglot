@@ -55,8 +55,7 @@ router.route('/quotes')
 })
 .post(function(req, res, next) {
   if(!req.body.hasOwnProperty('content')) {
-    res.statusCode = 400;
-    return res.send('Error 400: Post syntax incorrect.');
+    return res.status(400).send('Error 400: Post syntax incorrect.');
   }
   quotecount = quotecount+1; 
   var newQuote;
@@ -80,8 +79,7 @@ router.route('/quotes/:index')
 })
 .put(function(req, res, next) {
   if(!req.body.hasOwnProperty('content') && (!req.body.hasOwnProperty('author'))) {
-    res.statusCode = 400;
-    return res.send('Error 400: Post syntax incorrect.');
+    return res.status(400).send('Error 400: Post syntax incorrect.');
   }
   var query = {'index':req.params.index};
   var newQuote = new Quote();
@@ -96,7 +94,7 @@ router.route('/quotes/:index')
   Quote.findOneAndUpdate(query, upsertData, {upsert:true}, function(err, doc){
     if (err) return res.send(500, { error: err });
     res.setHeader('Content-Type', 'application/json');
-    return res.send(202, req.params.index);
+    return res.status(202).send(req.params.index);
   });
 })
 .delete(function(req, res, next) {

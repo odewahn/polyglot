@@ -52,7 +52,7 @@ class Quote(Resource):
         args['author'] = args['author'] if args['author'] else existing_quote["author"]
         try:
             mongo.db.quotes.update({
-                'index': quote_id
+                'index': int(quote_id)
             },{
                 '$set': {
                     'content': args['content'],
