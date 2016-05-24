@@ -87,11 +87,14 @@ $app->group('/api/quotes', function () {
                 $record = $result->getNext();
 
                 $record = json_encode($record, JSON_PRETTY_PRINT);
-                return $response
-                    ->withHeader('Content-Type', 'application/json')
-                    ->getBody()->write($record);
-            }
 
+        	$response->getBody()->write($record);
+	        $newResponse = $response->withHeader(
+                        'Content-type',
+                        'application/json; charset=utf-8'
+                       );
+		return $newResponse;
+	    };
             return $response->withStatus(500, 'Internal Server Error');
         });
 
