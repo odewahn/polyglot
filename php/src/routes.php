@@ -106,7 +106,8 @@ $app->group('/api/quotes', function () {
             }
 
             try {
-                $quotes->update(['index' => (int) $args['index']], $quote);
+                $index = ['index' => (int) $args['index']];
+                $quotes->update($index, array_merge($index, $quote));
                 return $response
                     ->withStatus(200, 'OK')
                     ->getBody()
