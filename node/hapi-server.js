@@ -23,7 +23,7 @@ var Inert = require('inert');
 var Path = require('path');
 
 var server = new Hapi.Server();
-server.connection({ port: 3000 });
+server.connection({ port: 8080 });
 server.register(require('inert'), function(err) {
   
   if (err) {
@@ -140,5 +140,5 @@ server.route([
 ]);
 
 server.start(function() {
-  console.log('Hapi is listening to http://localhost:3000');
+  console.log('Hapi is listening to http://localhost:8080');
 });

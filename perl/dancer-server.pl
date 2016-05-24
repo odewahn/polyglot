@@ -8,6 +8,7 @@ my $quotes = $db->get_collection('quotes');
 my $json = JSON->new->allow_nonref;
 
 set content_type => 'application/json';
+set port         => 8080;
 
 get '/' => sub{
     return {message => "Hello from Perl and Dancer"};

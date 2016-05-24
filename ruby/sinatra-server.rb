@@ -12,7 +12,7 @@ class Quote
   field :content
 end
 Mongoid.load!("mongoid.yml", :development)
-set :port, 3000
+set :port, 8080
 set :bind, '0.0.0.0'
 
 get '/demo*' do
