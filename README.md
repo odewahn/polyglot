@@ -3,7 +3,7 @@ Code for my Becoming a Polyglot talk
 
 In this repository are examples in several languages of a basic API in a common framework for that language.  They all use the same mongodb backend, and all use the same single page HTML application.
 
-All of them run at http://localhost:3000
+All of them run at http://localhost:8080
 
 The following paths work in each environment:
 * /api/quotes => quote list
@@ -25,7 +25,7 @@ $ php composer.phar install
 
 $ pecl install mongo
 $ php -i | grep ini - add extension=mongo.so to this file, or create it
-$ php -S 0.0.0.0:3000 -t ./public/ ./public/index.php
+$ php -S 0.0.0.0:8080 -t ./public/ ./public/index.php
 ```
 
 # Python
@@ -46,11 +46,11 @@ You can skip all of the setup instructions above and use the docker container if
 First, install docker from http://www.docker.com/toolkit
 Next:
   * Start the docker shortcut utility, note the IP address it gives
-  * `docker run -i -t -p 3000:3000 synedra/polyglot`
+  * `docker run -i -t -p 8080:8080 synedra/polyglot`
   * `/etc/init.d/mongodb start`
   * `mongoimport --collection quotes --file ../data/quoteid.json --type json --jsonArray`
   * run the startup command for whichever language you like
-  * The server will be running on http://{docker-ip}:3000
+  * The server will be running on http://{docker-ip}:8080
 
 
 # Cloud 9

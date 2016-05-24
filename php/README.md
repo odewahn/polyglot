@@ -30,7 +30,7 @@ Simply edit `src/routes.php`
 From the root of the project (the same directory as this README) run the following:
 
 ```
-$ php -S 0.0.0.0:3000 -t ./public/ ./public/index.php
+$ php -S 0.0.0.0:8080 -t ./public/ ./public/index.php
 ```
 
-This will start the PHP cli-server on port `3000`.
+This will start the PHP cli-server on port `8080`.
