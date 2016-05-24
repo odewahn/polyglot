@@ -53,3 +53,10 @@ Next:
   * The server will be running on http://{docker-ip}:3000
 
 
+# Cloud 9
+
+Alternatively, you can use Cloud 9 (https://c9.io) to setup a cloud-based containerised environment. 
+
+ * Setup a new workspace based on the 'Blank' image, cloning from this repo
+ * Setup mongodb based on the Cloud 9 instructions: https://community.c9.io/t/setting-up-mongodb/1717
+ * Follow the Setup instructions for the Mngo, PHP, Python, Node, Ruby and Perl instructions as usual.
