@@ -55,18 +55,18 @@ Next:
 
 # Cloud 9
 
-Alternatively, you can use Cloud 9 (https://c9.io) to setup a cloud-based containerised environment. 
-
+Alternatively, you can use Cloud 9 (https://c9.io) to setup a cloud-based containerised environment. In order to run all of the versions, you'll need to create an image based on PHP.  Further instructions for getting PHP to run are below.
  * Setup a new workspace based on the 'PHP/Apache' image, cloning from this repo
- * Setup and run mongo within a new c9 terminal tab based on https://community.c9.io/t/setting-up-mongodb/1717, plus installing required packages for the c9 environment:
-
+ * Run the setup needed for PHP
 ```
+$ cd php
 $ php composer.phar install 
 $ sudo apt-get install php5 php5-dev libapache2-mod-php5 apache2-threaded-dev php-pear php5-mongo
 $ wget http://pecl.php.net/get/mongo
 $ sudo pecl install mongo
-$ echo 'mongod --bind_ip=$IP --dbpath=data --nojournal --rest "$@"' > mongod
-$ chmod a+x mongod
+```
+ * For all languages, to run mongo, start the following command in a separate terminal on c9.
+```
 $ ./mongod
 ```
  * In a new tab: follow the Setup instructions for the PHP, Python, Node, Ruby and Perl instructions as usual.
