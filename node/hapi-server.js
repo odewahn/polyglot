@@ -114,7 +114,7 @@ server.route([
           if (err)  {
             return reply({ error: err }).code(500);
           }
-          return reply("succesfully saved");
+          return reply(request.params.index);
         });
     }
   },

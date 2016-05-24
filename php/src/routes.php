@@ -111,7 +111,7 @@ $app->group('/api/quotes', function () {
                     ->withStatus(200, 'OK')
                     ->getBody()
                     ->write(
-                        json_encode('succesfully saved', JSON_PRETTY_PRINT)
+                        json_encode($args['index'], JSON_PRETTY_PRINT)
                     );
             } catch (\MongoCursorException $e) {
                 return $response

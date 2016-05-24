@@ -95,7 +95,8 @@ router.route('/quotes/:index')
   delete upsertData._id;
   Quote.findOneAndUpdate(query, upsertData, {upsert:true}, function(err, doc){
     if (err) return res.send(500, { error: err });
-    return res.send("succesfully saved");
+    res.setHeader('Content-Type', 'application/json');
+    return res.send(202, req.params.index);
   });
 })
 .delete(function(req, res, next) {
