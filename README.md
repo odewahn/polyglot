@@ -68,5 +68,6 @@ $ sudo pecl install mongo
  * For all languages, to run mongo, start the following command in a separate terminal on c9.
 ```
 $ ./mongod
+$ mongoimport --collection quotes --file data/quoteid.json --type json --jsonArray
 ```
  * In a new tab: follow the Setup instructions for the PHP, Python, Node, Ruby and Perl instructions as usual.
