@@ -1,6 +1,10 @@
 # polyglot
 Code for my Becoming a Polyglot talk
 
+Slides are available at: http://www.slideshare.net/synedra/polyglot-copy
+
+Many people understand the very basics of several languages, all the way to Hello World. However, this isn’t a full fledged application and it’s challenging to make the translations in your head between all the different dialects (interpreted languages aren’t really different from each other like different languages – they work very much the same and the only difference is in the structure of the language). Out in our community are many people who firmly believe that moving from Ruby to Perl is not possible, that it’s very difficult to learn a new language, that it makes no sense to try to understand what “foreign” code might be doing.
+
 In this repository are examples in several languages of a basic API in a common framework for that language.  They all use the same mongodb backend, and all use the same single page HTML application.
 
 All of them run at http://localhost:8080
