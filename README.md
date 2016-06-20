@@ -17,7 +17,7 @@ You will need to have mongodb installed and running.  Installation info for the 
 
 To insert the information from the quoteid.json file to get your DB started, use the following command:
 
-`mongoimport --collection quotes --file ../data/quoteid.json --type json --jsonArray`
+`mongoimport --collection quotes --file data/quoteid.json --type json --jsonArray`
 
 ```
 # PHP
@@ -48,7 +48,7 @@ Next:
   * Start the docker shortcut utility, note the IP address it gives
   * `docker run -i -t -p 8080:8080 synedra/polyglot`
   * `/etc/init.d/mongodb start`
-  * `mongoimport --collection quotes --file ../data/quoteid.json --type json --jsonArray`
+  * `mongoimport --collection quotes --file data/quoteid.json --type json --jsonArray`
   * run the startup command for whichever language you like
   * The server will be running on http://{docker-ip}:8080
 
@@ -61,6 +61,7 @@ Alternatively, you can use Cloud 9 (https://c9.io) to setup a cloud-based contai
 ```
 $ cd php
 $ php composer.phar install 
+$ sudo apt-get update
 $ sudo apt-get install php5 php5-dev libapache2-mod-php5 apache2-threaded-dev php-pear php5-mongo
 $ wget http://pecl.php.net/get/mongo
 $ sudo pecl install mongo
