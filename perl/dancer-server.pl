@@ -49,7 +49,7 @@ post '/api/quotes' => sub {
     my %response = (
         'author' => params->{author},
         'content' => params->{content},
-        'id' => $max_id
+        'index' => $max_id
     );
 
     my $response = $quotes->insert_one(\%response);
