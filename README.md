@@ -49,6 +49,7 @@ $ php -S 0.0.0.0:8080 -t ./public/ ./public/index.php
 # Docker setup
 You can skip all of the setup instructions above and use the docker container if you like.
 First, install docker from http://www.docker.com/toolkit
+
 Next:
   * Start the docker shortcut utility
   * `docker run -i -t -p 8080:8080 synedra/polyglot`
