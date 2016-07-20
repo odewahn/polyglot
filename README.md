@@ -7,7 +7,7 @@ Many people understand the very basics of several languages, all the way to Hell
 
 In this repository are examples in several languages of a basic API in a common framework for that language.  They all use the same mongodb backend, and all use the same single page HTML application.
 
-All of them run at http://localhost:8080
+All of them run at http://{server}:8080
 
 The following paths work in each environment:
 * /api/quotes => quote list
@@ -23,15 +23,6 @@ To insert the information from the quoteid.json file to get your DB started, use
 
 `mongoimport --collection quotes --file data/quoteid.json --type json --jsonArray`
 
-```
-# PHP
-$ php composer.phar install 
-
-$ pecl install mongo
-$ php -i | grep ini - add extension=mongo.so to this file, or create it
-$ php -S 0.0.0.0:8080 -t ./public/ ./public/index.php
-```
-
 # Python
 `cd python; pip install --user -r requirements.txt; python flask-server.py`
 
@@ -45,34 +36,26 @@ $ php -S 0.0.0.0:8080 -t ./public/ ./public/index.php
 # Perl
 `sudo cpan -i -f Dancer Dancer::Plugin::CRUD JSON MongoDB; perl dancer-server.pl`
 
+# PHP
+
+```
+$ php composer.phar install 
+
+$ pecl install mongo
+$ php -i | grep ini - add extension=mongo.so to this file, or create it
+$ php -S 0.0.0.0:8080 -t ./public/ ./public/index.php
+```
+
 # Docker setup
 You can skip all of the setup instructions above and use the docker container if you like.
 First, install docker from http://www.docker.com/toolkit
 Next:
-  * Start the docker shortcut utility, note the IP address it gives
+  * Start the docker shortcut utility
   * `docker run -i -t -p 8080:8080 synedra/polyglot`
   * `/etc/init.d/mongodb start`
   * `mongoimport --collection quotes --file data/quoteid.json --type json --jsonArray`
   * run the startup command for whichever language you like
-  * The server will be running on http://{docker-ip}:8080
-
-
-# Cloud 9
-
-Alternatively, you can use Cloud 9 (https://c9.io) to setup a cloud-based containerised environment. In order to run all of the versions, you'll need to create an image based on PHP.  Further instructions for getting PHP to run are below.
- * Setup a new workspace based on the 'PHP/Apache' image, cloning from this repo
- * Run the setup needed for PHP
-```
-$ cd php
-$ php composer.phar install 
-$ sudo apt-get update
-$ sudo apt-get install php5 php5-dev libapache2-mod-php5 apache2-threaded-dev php-pear php5-mongo
-$ wget http://pecl.php.net/get/mongo
-$ sudo pecl install mongo
-```
- * For all languages, to run mongo, start the following command in a separate terminal on c9.
-```
-$ ./mongod
-$ mongoimport --collection quotes --file data/quoteid.json --type json --jsonArray
-```
- * In a new tab: follow the Setup instructions for the PHP, Python, Node, Ruby and Perl instructions as usual.
+  * The server will be running on http://localhost:8080
+  * Check [http://localhost:8080](http://localhost:8080) to see the welcome message
+  * Check [http://localhost:8080/api/quotes](http://localhost:8080/api/quotes) to see the JSON API response
+  * Check [http://localhost:8080/demo](http://localhost:8080/demo) to see the front page application.  Use the chrome developer tools to watch the traffic on the backend and play with the frontend
