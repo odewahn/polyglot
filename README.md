@@ -56,6 +56,11 @@ Next:
   * `/etc/init.d/mongodb start`
   * `mongoimport --collection quotes --file data/quoteid.json --type json --jsonArray`
   * run the startup command for whichever language you like
+   * cd python; python flask-server.py
+   * cd perl; perl dancer-server.py
+   * cd ruby; ruby sinatra-server.py
+   * cd node; node express-server.py
+   * cd php; php -S 0.0.0.0:8080 -t ./public/ ./public/index.php
   * The server will be running on http://localhost:8080
   * Check [http://localhost:8080](http://localhost:8080) to see the welcome message
   * Check [http://localhost:8080/api/quotes](http://localhost:8080/api/quotes) to see the JSON API response
